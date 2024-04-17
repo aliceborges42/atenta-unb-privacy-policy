@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Política de Privacidade</h1>
+    <div id="policy-content">
+        <!-- O conteúdo da política será inserido aqui -->
+    </div>
+
+    <script>
+        // URL da sua API que retorna a política de privacidade
+        var apiUrl = 'https://atenta-api.onrender.com/privacy_policies/';
+
+        // Função para fazer a solicitação à API e processar o conteúdo retornado
+        function fetchPolicy() {
+            fetch(apiUrl)
+                .then(response => response.json()) // Convertendo a resposta para JSON
+                .then(data => {
+                    // Obtendo o conteúdo da política
+                    var policyContent = data[0].content;
+                    // Convertendo o conteúdo de Markdown para HTML
+                    var converter = new showdown.Converter();
+                    var htmlContent = converter.makeHtml(policyContent);
+                    // Inserindo o conteúdo HTML na página
+                    document.getElementById('policy-content').innerHTML = htmlContent;
+                })
+                .catch(error => console.error('Erro ao buscar a política de privacidade:', error));
+        }
+
+        // Chamando a função fetchPolicy para carregar a política de privacidade ao carregar a página
+        fetchPolicy();
+    </script>
+
+    <!-- Biblioteca Showdown.js para converter Markdown para HTML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+</body>
+
+</html>
